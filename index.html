@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex — Cinematography &amp; VFX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg:#121110;
+    --surface:#1c1a16;
+    --surface-line:#2b2820;
+    --ink:#efece3;
+    --muted:#8b8577;
+    --line:#2e2b23;
+    --accent:#b8543b;
+    --font-display:'Fraunces', serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  .wrap{
+    max-width:1680px;
+    margin:0 auto;
+    padding:0 4vw;
+  }
+
+  /* ---------- NAV ---------- */
+
+  nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:28px 4vw;
+    mix-blend-mode:difference;
+    color:#fff;
+    transition:padding .4s ease;
+  }
+
+  nav.scrolled{padding:16px 4vw;}
+
+  .nav-mark{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:.14em;
+  }
+
+  .nav-links{
+    display:flex;
+    gap:36px;
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.1em;
+  }
+
+  .nav-links a{
+    opacity:.72;
+    transition:opacity .25s ease;
+  }
+  .nav-links a:hover{opacity:1;}
+
+  @media(max-width:640px){
+    .nav-links{gap:20px;}
+  }
+
+  /* ---------- HERO ---------- */
+
+  header.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:0 4vw 8vh;
+    position:relative;
+  }
+
+  .hero-eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.16em;
+    color:var(--muted);
+    margin-bottom:28px;
+    text-transform:uppercase;
+  }
+
+  h1.hero-title{
+    font-family:var(--font-display);
+    font-weight:300;
+    font-size:clamp(48px,9vw,132px);
+    line-height:.96;
+    letter-spacing:-.02em;
+  }
+
+  h1.hero-title em{
+    font-style:italic;
+    font-weight:400;
+    color:var(--accent);
+  }
+
+  .hero-foot{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-top:48px;
+    padding-top:24px;
+    border-top:1px solid var(--line);
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .hero-foot span{display:block;}
+
+  .scroll-cue{
+    position:absolute;
+    right:4vw;
+    bottom:8vh;
+    writing-mode:vertical-rl;
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .scroll-cue::after{
+    content:'';
+    width:1px;
+    height:44px;
+    background:var(--muted);
+    display:block;
+  }
+
+  @media(max-width:640px){
+    .scroll-cue{display:none;}
+    .hero-foot{flex-direction:column;align-items:flex-start;gap:8px;}
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+
+  section{
+    padding:14vh 0;
+    border-top:1px solid var(--line);
+  }
+
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:8vh;
+    gap:24px;
+  }
+
+  .section-eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    color:var(--accent);
+    text-transform:uppercase;
+    margin-bottom:14px;
+    display:block;
+  }
+
+  .section-title{
+    font-family:var(--font-display);
+    font-weight:300;
+    font-size:clamp(30px,4.4vw,56px);
+    letter-spacing:-.01em;
+  }
+
+  .section-note{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--muted);
+    max-width:280px;
+    text-align:right;
+    line-height:1.6;
+  }
+
+  @media(max-width:760px){
+    .section-head{flex-direction:column;align-items:flex-start;}
+    .section-note{text-align:left;max-width:100%;}
+  }
+
+  /* ---------- STILLS / CLIPS GRID ---------- */
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:52px 40px;
+  }
+
+  @media(max-width:1100px){
+    .grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:640px){
+    .grid{grid-template-columns:1fr; gap:32px;}
+  }
+
+  .tile{
+    position:relative;
+    background:var(--surface);
+    aspect-ratio:17/9;
+    overflow:hidden;
+    border:1px solid var(--line);
+    cursor:pointer;
+  }
+
+  .tile-frame{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      repeating-linear-gradient(135deg,var(--surface-line) 0 1px,transparent 1px 26px);
+  }
+
+  .tile-index{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:.08em;
+  }
+
+  .tile-info{
+    position:absolute;
+    left:0;right:0;bottom:0;
+    padding:20px;
+    background:linear-gradient(180deg,transparent,rgba(21,20,15,.94) 70%);
+    color:#f5f3ee;
+    transform:translateY(calc(100% - 54px));
+    transition:transform .45s cubic-bezier(.22,1,.36,1);
+  }
+
+  .tile:hover .tile-info,
+  .tile:focus-within .tile-info{
+    transform:translateY(0);
+  }
+
+  .tile-title{
+    font-family:var(--font-display);
+    font-style:italic;
+    font-weight:400;
+    font-size:19px;
+    margin-bottom:2px;
+  }
+
+  .tile-sub{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:.06em;
+    color:#c9c4b6;
+    margin-bottom:14px;
+    text-transform:uppercase;
+  }
+
+  .tile-meta{
+    font-family:var(--font-mono);
+    font-size:11px;
+    line-height:1.9;
+    color:#e4e0d4;
+    border-top:1px solid rgba(245,243,238,.18);
+    padding-top:10px;
+  }
+
+  .tile-meta div{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .tile-meta span:first-child{color:#938f7f;}
+
+  .tile-play{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:52px;height:52px;
+    border:1px solid var(--muted);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .3s ease;
+  }
+  .tile:hover .tile-play{opacity:0;}
+  .tile-play svg{width:14px;height:14px;fill:var(--ink);}
+
+  /* ---------- VFX SLIDER ---------- */
+
+  .vfx-list{
+    display:flex;
+    flex-direction:column;
+    gap:80px;
+  }
+
+  .vfx-item{
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:48px;
+    align-items:center;
+  }
+
+  .vfx-item:nth-child(even){
+    grid-template-columns:1.4fr 1fr;
+  }
+  .vfx-item:nth-child(even) .vfx-copy{order:2;}
+  .vfx-item:nth-child(even) .vfx-slider{order:1;}
+
+  @media(max-width:820px){
+    .vfx-item,
+    .vfx-item:nth-child(even){grid-template-columns:1fr;}
+    .vfx-item:nth-child(even) .vfx-copy{order:1;}
+    .vfx-item:nth-child(even) .vfx-slider{order:2;}
+  }
+
+  .vfx-copy .tile-index{display:block;margin-bottom:18px;}
+
+  .vfx-title{
+    font-family:var(--font-display);
+    font-weight:300;
+    font-style:italic;
+    font-size:clamp(26px,3vw,36px);
+    margin-bottom:16px;
+  }
+
+  .vfx-desc{
+    font-size:14.5px;
+    line-height:1.75;
+    color:var(--muted);
+    margin-bottom:22px;
+    max-width:38ch;
+  }
+
+  .vfx-meta{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--muted);
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    border-left:1px solid var(--line);
+    padding-left:14px;
+  }
+  .vfx-meta span{color:var(--ink);}
+
+  .vfx-slider{
+    position:relative;
+    aspect-ratio:16/10;
+    overflow:hidden;
+    user-select:none;
+    border:1px solid var(--line);
+  }
+
+  .vfx-pane{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:flex-end;
+    padding:16px;
+  }
+
+  .vfx-before{
+    background:repeating-linear-gradient(135deg,#2f2c23 0 1px,var(--surface) 1px 24px);
+  }
+
+  .vfx-after{
+    background:repeating-linear-gradient(135deg,#3a3527 0 1px,#282318 1px 24px);
+    clip-path:inset(0 0 0 50%);
+  }
+
+  .vfx-tag{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    letter-spacing:.1em;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+
+  .vfx-handle-track{
+    position:absolute;
+    top:0;bottom:0;
+    left:50%;
+    width:0;
+  }
+
+  .vfx-handle-line{
+    position:absolute;
+    top:0;bottom:0;left:0;
+    width:1px;
+    background:var(--ink);
+  }
+
+  .vfx-handle{
+    position:absolute;
+    top:50%;left:0;
+    transform:translate(-50%,-50%);
+    width:38px;height:38px;
+    border-radius:50%;
+    background:var(--bg);
+    border:1px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    cursor:ew-resize;
+  }
+
+  .vfx-handle svg{width:14px;height:14px;}
+
+  .vfx-range{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    opacity:0;
+    cursor:ew-resize;
+    -webkit-appearance:none;
+    appearance:none;
+  }
+
+  /* ---------- FOOTER ---------- */
+
+  footer{
+    border-top:1px solid var(--line);
+    padding:14vh 0 6vh;
+  }
+
+  .footer-title{
+    font-family:var(--font-display);
+    font-weight:300;
+    font-style:italic;
+    font-size:clamp(32px,6vw,72px);
+    line-height:1.04;
+    max-width:14ch;
+    margin-bottom:6vh;
+  }
+
+  .footer-title a{border-bottom:1px solid var(--line);}
+  .footer-title a:hover{border-color:var(--accent);color:var(--accent);}
+
+  .footer-grid{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:24px;
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--muted);
+    padding-top:24px;
+    border-top:1px solid var(--line);
+  }
+
+  .footer-links{display:flex;gap:24px;}
+  .footer-links a:hover{color:var(--ink);}
+
+  /* ---------- REVEAL ---------- */
+
+  .reveal{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- LIGHTBOX ---------- */
+
+  .lightbox{
+    position:fixed;
+    inset:0;
+    z-index:200;
+    background:rgba(8,7,5,.95);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:8vh 4vw;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease;
+  }
+
+  .lightbox.open{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .lightbox-content img,
+  .lightbox-content video{
+    display:block;
+    max-width:100%;
+    max-height:84vh;
+    width:auto;
+    height:auto;
+  }
+
+  .lightbox-close{
+    position:absolute;
+    top:28px;
+    right:4vw;
+    width:42px;height:42px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--ink);
+    font-family:var(--font-mono);
+    font-size:14px;
+    cursor:pointer;
+  }
+
+  .lightbox-close:hover{
+    border-color:var(--ink);
+  }
+
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-mark">Alexander Chikvaidze — DP / VFX</div>
+  <div class="nav-links">
+    <a href="#stills">Stills</a>
+    <a href="#clips">Motion</a>
+    <a href="#vfx">VFX</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  
+  <h1 class="hero-title">Alexander Chikvaidze<br><em>TRELIAZORI</em></h1>
+  <div class="hero-foot">
+   
+    
+  </div>
+ 
+</header>
+
+<section id="stills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-eyebrow"></span>
+        <h2 class="section-title">Stills</h2>
+      </div>
+      
+    </div>
+
+    <div class="grid reveal">
+
+      <div class="tile">
+        <div class="tile-frame"><img src="images/scopes_1.1.2.png" alt="Interior, dusk" style="width:100%;height:100%;object-fit:cover;"><span class="tile-index" style="position:absolute;top:16px;left:16px;">STILL — 01</span></div>
+        <div class="tile-info">
+          <div class="tile-title">NYFA-"Montage" Project</div>
+          
+          <div class="tile-meta">
+            <div><span>Camera</span><span>RED Komodo 6K</span></div>
+            <div><span>Lens</span><span>Zenith Helios 44-2 58mm</span></div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="tile">
+        <div class="tile-frame"><img src="images/ikka.png" alt="Coastal wide" style="width:100%;height:100%;object-fit:cover;"><span class="tile-index" style="position:absolute;top:16px;left:16px;">STILL — 02</span></div>
+        <div class="tile-info">
+          <div class="tile-title">Aegis of The Abyss</div>
+          
+          <div class="tile-meta">
+            <div><span>Camera</span><span>Canon EOS C100 MK I</span></div>
+            <div><span>Lens</span><span>Canon EF-S 18-55mm</span></div>
+           
+          </div>
+        </div>
+      </div>
+
+      <div class="tile">
+        <div class="tile-frame"><img src="images/plant.png" alt="Portrait, backlit" style="width:100%;height:100%;object-fit:cover;"><span class="tile-index" style="position:absolute;top:16px;left:16px;">STILL — 03</span></div>
+        <div class="tile-info">
+          <div class="tile-title">Aegis of The Abyss</div>
+         
+          <div class="tile-meta">
+            <div><span>Camera</span><span>Canon EOS C100 MK I</span></div>
+            <div><span>Lens</span><span>Zenith Helios 44-2 58mm</span></div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="tile">
+        <div class="tile-frame"><img src="images/origami.png" alt="Warehouse static" style="width:100%;height:100%;object-fit:cover;"><span class="tile-index" style="position:absolute;top:16px;left:16px;">STILL — 04</span></div>
+        <div class="tile-info">
+          <div class="tile-title">Aegis of The Abyss</div>
+          
+          <div class="tile-meta">
+            <div><span>Camera</span><span>Canon EOS C100 MK I</span></div>
+            <div><span>Lens</span><span>Canon EF-S 18-55mm</span></div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="tile">
+        <div class="tile-frame"><img src="images/Screenshot 2026-08-15 200217.png" alt="Fog study" style="width:100%;height:100%;object-fit:cover;"><span class="tile-index" style="position:absolute;top:16px;left:16px;">STILL — 05</span></div>
+        <div class="tile-info">
+          <div class="tile-title">KOMODO Test</div>
+          
+          <div class="tile-meta">
+            <div><span>Camera</span><span>RED Komodo 6K</span></div>
+            <div><span>Lens</span><span>Zenith Helios 44-2 58mm</span></div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="tile">
+        <div class="tile-frame"><img src="images/Screenshot 2026-08-15 200244.png" alt="Night exterior" style="width:100%;height:100%;object-fit:cover;"><span class="tile-index" style="position:absolute;top:16px;left:16px;">STILL — 06</span></div>
+        <div class="tile-info">
+          <div class="tile-title">KOMODO Test</div>
+          
+          <div class="tile-meta">
+            <div><span>Camera</span><span>RED Komodo 6K</span></div>
+            <div><span>Lens</span><span>Zenith Helios 44-2 58mm</span></div>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="clips">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-eyebrow"></span>
+        <h2 class="section-title">Clips</h2>
+      </div>
+     
+    </div>
+
+    <div class="grid reveal">
+
+      <div class="tile">
+        <div class="tile-frame"><video src="clips/clip-01.mp4" style="width:100%;height:100%;object-fit:cover;" muted loop playsinline preload="metadata"></video><span class="tile-index" style="position:absolute;top:16px;left:16px;">CLIP — 01</span></div>
+        <div class="tile-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info">
+          <div class="tile-title">Chase — Handheld</div>
+          <div class="tile-sub">00:42 — 23.98fps</div>
+          <div class="tile-meta">
+            <div><span>Camera</span><span>ARRI Alexa Mini LF</span></div>
+            <div><span>Lens</span><span>Cooke Anamorphic/i 40mm</span></div>
+            <div><span>Rig</span><span>Easyrig + handheld</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tile">
+        <div class="tile-frame"><video src="clips/wallll.mov" style="width:100%;height:100%;object-fit:cover;" muted loop playsinline preload="metadata"></video><span class="tile-index" style="position:absolute;top:16px;left:16px;">CLIP — 02</span></div>
+        <div class="tile-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info">
+          <div class="tile-title">Spider-Man</div>
+          <div class="tile-sub"></div>
+          <div class="tile-meta">
+            <!-- <div><span>Camera</span><span>Sony Venice 2</span></div>
+            <div><span>Lens</span><span>Zeiss Supreme Prime 50mm</span></div>
+            <div><span>Rig</span><span>Sticks, fluid head</span></div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="tile">
+        <div class="tile-frame"><video src="clips/clip-03.mp4" style="width:100%;height:100%;object-fit:cover;" muted loop playsinline preload="metadata"></video><span class="tile-index" style="position:absolute;top:16px;left:16px;">CLIP — 03</span></div>
+        <div class="tile-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="tile-info">
+          <div class="tile-title">Reveal — Gimbal</div>
+          <div class="tile-sub">00:28 — 23.98fps</div>
+          <div class="tile-meta">
+            <div><span>Camera</span><span>RED Komodo 6K</span></div>
+            <div><span>Lens</span><span>Sigma Cine 35mm T1.5</span></div>
+            <div><span>Rig</span><span>DJI RS3 Pro</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="vfx">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="section-eyebrow"></span>
+        <h2 class="section-title">VFX — before / after</h2>
+      </div>
+      
+    </div>
+
+    <div class="vfx-list">
+
+      <div class="vfx-item reveal">
+        <div class="vfx-copy">
+          <span class="tile-index"></span>
+          <h3 class="vfx-title">VFX Comp</h3>
+          <p class="vfx-desc"></p>
+          <div class="vfx-meta">
+            <span><span>Software:</span> Blender, Adobe After Effects</span>
+            <span><span>Track:</span>3D camera solve</span>
+            <span><span>Time:</span> ~2 hrs </span>
+            <span></span>3D Model by:</span> wirewheels-club</span>
+          </div>
+        </div>
+        <div class="vfx-slider" data-vfx>
+          <div class="vfx-pane vfx-before"><img src="vfx/must afteer.png" alt="Sky replacement — before" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><span class="vfx-tag" style="position:relative;">After</span></div>
+          <div class="vfx-pane vfx-after"><img src="vfx/before must.png" alt="Sky replacement — after" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><span class="vfx-tag" style="position:relative;">Before</span></div>
+          <div class="vfx-handle-track">
+            <div class="vfx-handle-line"></div>
+            <div class="vfx-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6"/></svg></div>
+          </div>
+          <input class="vfx-range" type="range" min="0" max="100" value="50" step="1" aria-label="Before and after comparison slider">
+        </div>
+      </div>
+
+      <div class="vfx-item reveal">
+        <div class="vfx-copy">
+          <span class="tile-index"></span>
+          <h3 class="vfx-title">Set extension</h3>
+          <p class="vfx-desc">3D Modeling, Texturing, Rotoscoping, Compositing</p>
+          <div class="vfx-meta">
+            <span><span>Software:</span> Blender,Adobe After Effects</span>
+            <span><span>Track:</span> 3D camera solve</span>
+            <span><span>Time:</span> ~4 hrs</span>
+            
+          </div>
+        </div>
+        <div class="vfx-slider" data-vfx>
+          <div class="vfx-pane vfx-before"><img src="vfx/9.png" alt="Set extension — before" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><span class="vfx-tag" style="position:relative;">After</span></div>
+          <div class="vfx-pane vfx-after"><img src="vfx/1.png" alt="Set extension — after" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><span class="vfx-tag" style="position:relative;">Before</span></div>
+          <div class="vfx-handle-track">
+            <div class="vfx-handle-line"></div>
+            <div class="vfx-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6"/></svg></div>
+          </div>
+          <input class="vfx-range" type="range" min="0" max="100" value="50" step="1" aria-label="Before and after comparison slider">
+        </div>
+      </div>
+
+      <div class="vfx-item reveal">
+        <div class="vfx-copy">
+          <span class="tile-index"></span>
+          <h3 class="vfx-title">Fully CG Scene</h3>
+          <p class="vfx-desc">Rigging and Animating</p>
+          <div class="vfx-meta">
+            <span><span>Software:</span> Blender, DaVinci Resolve</span>
+            
+            <span><span>Time:</span> ~6 hrs</span>
+          </div>
+        </div>
+        <div class="vfx-slider" data-vfx>
+          <div class="vfx-pane vfx-before"><img src="vfx/spidey after.png" alt="Cleanup and comp — before" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><span class="vfx-tag" style="position:relative;">After</span></div>
+          <div class="vfx-pane vfx-after"><img src="vfx/sp_0064.png" alt="Cleanup and comp — after" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"><span class="vfx-tag" style="position:relative;">Before</span></div>
+          <div class="vfx-handle-track">
+            <div class="vfx-handle-line"></div>
+            <div class="vfx-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6"/></svg></div>
+          </div>
+          <input class="vfx-range" type="range" min="0" max="100" value="50" step="1" aria-label="Before and after comparison slider">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2 class="footer-title">Let's shoot<br>something — <a href="mailto:hello@example.com">Alexander@treliazori.com</a></h2>
+    <div class="footer-grid">
+      <span>© 2026 Alex. All frames shown are placeholders.</span>
+      <div class="footer-links">
+        <a href="#">Instagram</a>
+        <a href="#">Vimeo</a>
+        <a href="#">IMDB</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+  <div class="lightbox-content"></div>
+</div>
+
+<script>
+
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, {passive:true});
+
+  var reveals = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.14});
+  reveals.forEach(function(el){ io.observe(el); });
+
+  var lightbox = document.getElementById('lightbox');
+  var lightboxContent = lightbox.querySelector('.lightbox-content');
+
+  function openLightbox(tile){
+    var media = tile.querySelector('.tile-frame img, .tile-frame video');
+    if(!media) return;
+    lightboxContent.innerHTML = '';
+    var clone;
+    if(media.tagName === 'IMG'){
+      clone = document.createElement('img');
+      clone.src = media.src;
+      clone.alt = media.alt || '';
+    } else {
+      clone = document.createElement('video');
+      clone.src = media.currentSrc || media.src;
+      clone.controls = true;
+      clone.autoplay = true;
+      clone.loop = true;
+      clone.playsInline = true;
+    }
+    lightboxContent.appendChild(clone);
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    var v = lightboxContent.querySelector('video');
+    if(v) v.pause();
+    lightboxContent.innerHTML = '';
+  }
+
+  document.querySelectorAll('.tile').forEach(function(tile){
+    tile.setAttribute('tabindex', '0');
+    tile.setAttribute('role', 'button');
+    tile.setAttribute('aria-label', 'Open enlarged view');
+    tile.addEventListener('click', function(){ openLightbox(tile); });
+    tile.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        openLightbox(tile);
+      }
+    });
+  });
+
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){
+    if(e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeLightbox();
+  });
+
+  document.querySelectorAll('[data-vfx]').forEach(function(slider){
+    var after = slider.querySelector('.vfx-after');
+    var track = slider.querySelector('.vfx-handle-track');
+    var range = slider.querySelector('.vfx-range');
+
+    function set(val){
+      after.style.clipPath = 'inset(0 0 0 ' + val + '%)';
+      track.style.left = val + '%';
+    }
+
+    range.addEventListener('input', function(){
+      set(range.value);
+    });
+
+    set(50);
+  });
+
+</script>
+
+</body>
+</html>
