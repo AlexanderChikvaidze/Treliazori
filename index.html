@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alex — Cinematography &amp; VFX</title>
+<title>Alex</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -118,6 +118,15 @@
   .hero-bg img.active{
     opacity:1;
     transform:scale(1);
+  }
+
+  @media(max-width:640px){
+    /* Header stays full 100vh — instead of cropping the photo to
+       cover that tall/narrow box, shrink the photo itself so the
+       whole frame is visible. */
+    .hero-bg img{
+      object-fit:contain;
+    }
   }
 
   .hero-bg::after{
@@ -962,6 +971,41 @@
   });
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape') closeLightbox();
+  });
+
+  // ---------- FORCE VIDEO COVER FRAME ON MOBILE ----------
+  // Many mobile browsers (iOS Safari especially) will fetch the video
+  // metadata but never actually paint a frame until the video is
+  // scrubbed or played, so the tile stays on the placeholder pattern
+  // forever. Nudging currentTime forward by a hair forces a frame to
+  // decode and render as a "cover image" without autoplaying anything.
+  document.querySelectorAll('.tile-frame video').forEach(function(video){
+    function paintFrame(){
+      if(video.readyState >= 1 && video.currentTime === 0){
+        try{ video.currentTime = 0.05; }catch(e){}
+      }
+    }
+    video.addEventListener('loadedmetadata', paintFrame);
+    video.addEventListener('loadeddata', paintFrame);
+    video.addEventListener('seeked', function(){
+      video.classList.add('frame-ready');
+    });
+    // Some mobile browsers (data-saver mode especially) won't fetch
+    // ANY video bytes on preload="metadata" over cellular. load()
+    // re-kicks that fetch once the tile is actually in view.
+    if('IntersectionObserver' in window){
+      var vidIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.load();
+            vidIO.unobserve(entry.target);
+          }
+        });
+      }, {rootMargin:'200px'});
+      vidIO.observe(video);
+    } else {
+      video.load();
+    }
   });
 
   document.querySelectorAll('[data-vfx]').forEach(function(slider){
